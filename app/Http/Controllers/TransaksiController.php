@@ -164,7 +164,7 @@ class TransaksiController extends Controller
             'id_detail' => 'required'
         ]);
 
-        Transaksi::create($validatedData);        
+        Transaksi::create($validatedData);
 
         return redirect('/transaksi')->with('success', 'Transaksi berhasil ditambah');
     }
