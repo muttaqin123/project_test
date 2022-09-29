@@ -22,7 +22,7 @@
           </div>
         <div class="mb-3">
             <label for="stok" class="form-label">Stok Barang</label>
-            <input type="number" class="form-control" id="stok" name="stok"  value="{{ old('stok', $barang->stok) }}" required>
+            <input type="number" min="0" class="form-control" id="stok" name="stok"  value="{{ old('stok', $barang->stok) }}" required>
             @error('stok')  
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -46,40 +46,6 @@
                   </div>
               @enderror       
           </div>        
-        <button type="submit" class="btn btn-primary">Ubah</button>
-    </form>
-</div>
-@elseif ($title == 'Transaksi Barang')
-<div class="col-lg-8">
-    <form method="post" action="/transaksi/{{ $transaksi->id }}" class="mb-5">
-        @method('put')
-        @csrf
-        <div class="mb-3">
-            <label for="category" class="form-label">Nama Barang</label>
-            <select class="form-select" name="id_detail" >
-                @foreach ($detail as $detail)
-                    <option value="{{ $detail->id }}">{{ $detail->nama_barang }}</option>                    
-                @endforeach
-              </select>
-        </div> 
-        <div class="mb-3">
-            <label for="terjual" class="form-label">Jumlah Transaksi</label>
-            <input type="number" class="form-control @error('terjual') is-invalid @enderror" id="terjual" name="terjual" value="{{ old('terjual', $transaksi->terjual) }}" required autofocus>   
-              @error('terjual')  
-                  <div class="invalid-feedback">
-                      {{ $message }}
-                  </div>
-              @enderror       
-          </div>
-          <div class="mb-3">
-            <label for="tanggal_transaksi" class="form-label">Tanggal Transaksi</label>
-            <input type="date" class="form-control @error('tanggal_transaksi') is-invalid @enderror" id="tanggal_transaksi" name="tanggal_transaksi" value="{{ old('tanggal_transaksi', $transaksi->tanggal_transaksi) }}" required autofocus>   
-              @error('tanggal_transaksi')  
-                  <div class="invalid-feedback">
-                      {{ $message }}
-                  </div>
-              @enderror       
-          </div>
         <button type="submit" class="btn btn-primary">Ubah</button>
     </form>
 </div>

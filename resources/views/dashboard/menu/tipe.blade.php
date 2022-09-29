@@ -1,7 +1,6 @@
 @extends('dashboard.layouts.main')
 
-@section('container')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
+@section('container')    
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">{{ $title_table }}</h1>        

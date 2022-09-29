@@ -45,7 +45,7 @@ class TipeController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama_tipe' => 'required|max:50',            
+            'nama_tipe' => 'required|max:50|min:2'        
         ]);
 
         Tipe::create($validatedData);
@@ -88,7 +88,7 @@ class TipeController extends Controller
     public function update(Request $request, Tipe $tipe)
     {
         $rules = [
-            'nama_tipe' => 'required|max:50',            
+            'nama_tipe' => 'required|max:50|min:2'
         ];
 
         $validatedData = $request->validate($rules);

@@ -2,6 +2,12 @@
 
 @section('container')
 
+@if(session()->has('failedtransaksi'))
+      <div class="alert alert-danger col-lg-12 mt-3" role="alert"> 
+      {{ session('failedtransaksi') }}
+      </div>
+@endif
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     @if($title == 'Menu Barang')
         <h1 class="h2">Tambah Barang</h1>
@@ -29,18 +35,14 @@
             <label for="id_tipe" class="form-label">Tipe Barang</label>
             <select class="form-select" name="id_tipe" required>
                 <option value="" disabled selected hidden>Select your option</option>
-                @foreach ($tipe as $tipe)
-                    {{-- @if(old('id_tipe') == $tipe->id) --}}
-                        
-                    {{-- @else --}}
-                        <option value="{{ $tipe->id }}">{{ $tipe->nama_tipe }}</option>
-                    {{-- @endif --}}
+                @foreach ($tipe as $tipe)              
+                    <option value="{{ $tipe->id }}">{{ $tipe->nama_tipe }}</option>
                 @endforeach
             </select>
         </div>
         <div class="mb-3">
             <label for="stok" class="form-label">Stok Barang</label>
-            <input type="number" class="form-control" id="stok" name="stok"  value="{{ old('stok') }}" required>
+            <input type="number" min="0" class="form-control" id="stok" name="stok"  value="{{ old('stok') }}" required>
             @error('stok')  
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -72,19 +74,16 @@
         @csrf
         <div class="mb-3">
             <label for="category" class="form-label">Nama Barang</label>
-            <select class="form-select" name="id_detail">
-                @foreach ($detail as $detail)
-                    @if(old('id_detail') == 'id_detail')
-                        <option value="{{ $detail->id }}" selected>{{ $detail->nama_barang }}</option>
-                    @else
-                        <option value="{{ $detail->id }}">{{ $detail->nama_barang }}</option>
-                    @endif
+            <select class="form-select" name="id_detail" required>
+                <option value="" disabled selected hidden>Select your option</option>
+                @foreach ($detail as $detail)                    
+                    <option value="{{ $detail->id }}">{{ $detail->nama_barang }}</option>                    
                 @endforeach
               </select>
         </div> 
         <div class="mb-3">
             <label for="terjual" class="form-label">Jumlah Transaksi</label>
-            <input type="number" class="form-control @error('terjual') is-invalid @enderror" id="terjual" name="terjual" value="{{ old('terjual') }}" required autofocus>   
+            <input type="number" min="1" class="form-control @error('terjual') is-invalid @enderror" id="terjual" name="terjual" value="{{ old('terjual') }}" required autofocus>   
               @error('terjual')  
                   <div class="invalid-feedback">
                       {{ $message }}

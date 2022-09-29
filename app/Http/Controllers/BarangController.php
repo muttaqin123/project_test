@@ -55,7 +55,7 @@ class BarangController extends Controller
     {
         
         $validatedData = $request->validate([
-            'nama_barang' => 'required|max:50|min:1',
+            'nama_barang' => 'required|max:50|min:2',
             'stok' => 'required'
         ]);
 
@@ -64,10 +64,10 @@ class BarangController extends Controller
         $barang = Barang::max('id');
         
         if($request->id_tipe){
-        DB::table('detail')->insert([
-            'id_barang' => $barang,
-            'id_tipe' => $request->id_tipe
-        ]);
+            DB::table('detail')->insert([
+                'id_barang' => $barang,
+                'id_tipe' => $request->id_tipe
+            ]);
         }
         
         // Detail::create($barang,$validatedData2);
@@ -110,7 +110,7 @@ class BarangController extends Controller
     public function update(Request $request, Barang $barang)
     {
         $rules = [
-            'nama_barang' => 'required|max:50',
+            'nama_barang' => 'required|max:50|min:2',
             'stok' => 'required'
         ];
 

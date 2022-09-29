@@ -2,14 +2,12 @@
 
 @section('container')
 
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
-
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">{{ $title_table }}</h1>        
     </div>
 
     @if(session()->has('success'))
-      <div class="alert alert-success col-lg-10" role="alert"> 
+      <div class="alert alert-success col-lg-12" role="alert"> 
       {{ session('success') }}
       </div>
     @endif
@@ -36,8 +34,7 @@
             <td>{{ $transaksii->nama_barang }}</td>
             <td>{{ $transaksii->terjual }}</td>
             <td>{{ $transaksii->tanggal_transaksi }}</td>
-            <td>
-              <a href="/transaksi/{{ $transaksii->id }}/edit" class="badge bg-warning"><span data-feather="edit"></span></a>
+            <td>              
               <form action="/transaksi/{{ $transaksii->id }}" method="post" class="d-inline"> 
                 @method('delete')
                 @csrf

@@ -6,6 +6,7 @@ use App\Models\Transaksi;
 use App\Models\Detail;
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
@@ -37,7 +38,6 @@ class TransaksiController extends Controller
     public function create()
     {        
         $detail = Barang::join('detail', 'detail.id', '=', 'barang.id')->get();
-
         
         return view('dashboard.menu.create', [
             'title' => 'Transaksi Barang',
@@ -53,15 +53,28 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([            
-            'terjual' => 'required',
-            'tanggal_transaksi' => 'required',
-            'id_detail' => 'required'
-        ]);
+        $jual = $request->terjual;
+        $caribarang = $request->id_detail;
+        $stokk = Barang::where('id', $caribarang)->first();
+        $stokbaru = $stokk->stok - $jual;
 
-        Transaksi::create($validatedData);
+        if($stokbaru>=0){
+            $validatedData = $request->validate([            
+                'terjual' => 'required',
+                'tanggal_transaksi' => 'required',
+                'id_detail' => 'required'
+            ]);
 
-        return redirect('/transaksi')->with('success', 'Transaksi berhasil ditambah');
+            Barang::where('id', $stokk->id)->update([
+                'stok' => $stokbaru
+            ]);
+
+            Transaksi::create($validatedData);
+
+            return redirect('/transaksi')->with('success', 'Transaksi berhasil ditambah');
+        }else{
+            return redirect('/transaksi/create')->with('failedtransaksi', "Data habis, stok sisa " . $stokk->stok);
+        }
     }
 
     /**
