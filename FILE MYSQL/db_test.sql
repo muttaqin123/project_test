@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2022 at 07:53 AM
+-- Generation Time: Sep 29, 2022 at 02:14 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -38,13 +38,14 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `nama_barang`, `stok`) VALUES
-(1, 'Kopi', 101),
-(2, 'Teh', 100),
-(3, 'Pasta Gigi', 100),
-(4, 'Sabun Mandi', 100),
-(5, 'Sampo', 100),
-(7, 'Pensil', 100),
-(21, 'Haha', 1);
+(1, 'Kopi', 75),
+(2, 'Teh', 76),
+(3, 'Pasta Gigi', 80),
+(4, 'Sabun Mandi', 70),
+(5, 'Sampo', 75),
+(6, 'Pena', 75),
+(7, 'Pensil', 83),
+(8, 'Plester Luka', 95);
 
 -- --------------------------------------------------------
 
@@ -68,7 +69,9 @@ INSERT INTO `detail` (`id`, `id_barang`, `id_tipe`) VALUES
 (3, 3, 2),
 (4, 4, 2),
 (5, 5, 2),
-(7, 7, 4);
+(6, 6, 3),
+(7, 7, 3),
+(8, 8, 4);
 
 -- --------------------------------------------------------
 
@@ -88,7 +91,8 @@ CREATE TABLE `tipe` (
 INSERT INTO `tipe` (`id`, `nama_tipe`) VALUES
 (1, 'Konsumsi'),
 (2, 'Pembersih'),
-(4, 'ATK');
+(3, 'ATK'),
+(4, 'Alat P3K');
 
 -- --------------------------------------------------------
 
@@ -108,17 +112,16 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id`, `terjual`, `tanggal_transaksi`, `id_detail`) VALUES
-(1, 1200, '2023-05-01', 1),
-(2, 19, '2023-05-05', 2),
+(1, 10, '2021-05-01', 1),
+(2, 19, '2021-05-05', 2),
 (3, 15, '2021-05-10', 1),
 (4, 20, '2021-05-11', 3),
 (5, 30, '2021-05-11', 4),
 (6, 25, '2021-05-12', 5),
 (7, 5, '2021-05-12', 2),
-(8, 1, '2022-09-03', 1),
-(9, 10, '2021-05-10', 3),
-(12, 5, '2022-09-13', 1),
-(17, 4, '2022-01-01', 7);
+(8, 25, '2021-09-12', 6),
+(9, 17, '2022-01-01', 7),
+(10, 5, '2022-08-05', 8);
 
 --
 -- Indexes for dumped tables
@@ -159,25 +162,25 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `detail`
 --
 ALTER TABLE `detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tipe`
 --
 ALTER TABLE `tipe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
