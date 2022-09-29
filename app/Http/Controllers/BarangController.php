@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Detail;
 use App\Models\Tipe;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,36 +29,6 @@ class BarangController extends Controller
             'title_table' => 'Menu Barang',
             'title_kolom' => 'Nama Barang'
         ]);
-    }
-
-    public function search(Request $request){
-        $output = "";
-        
-        $barang = Detail::join('barang', 'barang.id', '=', 'detail.id_barang')
-        ->join('tipe', 'tipe.id', '=', 'detail.id_tipe')
-        ->where('barang.nama_barang', 'Like', '%' . $request->search . '%' )
-        ->orWhere('tipe.nama_tipe', 'Like', '%' . $request->search . '%' )
-        ->orWhere('barang.stok', 'Like', '%' . $request->search . '%' )
-        ->select('barang.id','barang.nama_barang', 'tipe.nama_tipe', 'stok')
-        ->get();
-        
-        // $posts = Post::join('categories', 'categories.id', '=', 'posts.category_id')
-        // ->where('categories.name', 'Like', '%' . $request->search . '%' )
-        // ->orWhere('posts.title', 'Like', '%' . $request->search . '%')->get();
-
-        foreach($barang as $barang){
-            $output.=                         
-
-            '<tr>
-                <td>' .$barang->id . '</td>
-                <td>' .$barang->nama_barang . '</td>
-                <td>' .$barang->nama_tipe . '</td>
-                <td>' .$barang->stok . '</td>                    
-            <tr>';
-
-        }
-        
-        return response($output);
     }
 
     /**
@@ -84,7 +55,7 @@ class BarangController extends Controller
     {
         
         $validatedData = $request->validate([
-            'nama_barang' => 'required|max:50',
+            'nama_barang' => 'required|max:50|min:1',
             'stok' => 'required'
         ]);
 
@@ -92,10 +63,12 @@ class BarangController extends Controller
 
         $barang = Barang::max('id');
         
+        if($request->id_tipe){
         DB::table('detail')->insert([
             'id_barang' => $barang,
             'id_tipe' => $request->id_tipe
-            ]);
+        ]);
+        }
         
         // Detail::create($barang,$validatedData2);
 
@@ -156,9 +129,12 @@ class BarangController extends Controller
      */
     public function destroy(Barang $barang)
     {
-        Barang::destroy($barang->id);
-    
-        return redirect('/barang')->with('success', 'Barang berhasil dihapus');
+        try{            
+            Barang::destroy($barang->id);
+            return redirect('/barang')->with('success', 'Barang berhasil dihapus, barang terdeteksi tidak memiliki data transaksi.');
+        }catch(Exception $error){
+            return redirect('/barang')->with('failed', 'ID barang yang akan dihapus, memiliki data dibagian transaksi. Harap untuk menghapus data dibagian transaksi terlebih dahulu!!!');
+        }
     }
 
 }

@@ -29,111 +29,6 @@ class TransaksiController extends Controller
         ]);
     }
 
-    public function urut(Request $request)
-    {
-        if($request->urutt == 'menaik'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')
-            ->orderBy('barang.nama_barang', 'asc')
-            ->get();
-        }elseif ($request->urutt == 'menurun'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')
-            ->orderBy('barang.nama_barang', 'desc')
-            ->get();
-        }elseif ($request->urutt == 'nonaktif'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')            
-            ->get();
-        }
-        return view('dashboard.menu.transaksi', [
-            'transaksi' => $detail,
-            'title_table' => 'Menu Transaksi',
-            'title_kolom' => 'Transaksi Barang'
-        ]);
-    }
-
-    public function uruttanggal(Request $request)
-    {
-        if($request->uruttt == 'menaik'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')
-            ->orderBy('tanggal_transaksi', 'asc')
-            ->get();
-        }elseif ($request->uruttt == 'menurun'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')
-            ->orderBy('tanggal_transaksi', 'desc')
-            ->get();
-        }elseif ($request->uruttt == 'nonaktif'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')            
-            ->get();
-        }
-        return view('dashboard.menu.transaksi', [
-            'transaksi' => $detail,
-            'title_table' => 'Menu Transaksi',
-            'title_kolom' => 'Transaksi Barang'
-        ]);
-    }
-
-    public function urutjual(Request $request)
-    {
-        if($request->urutjual == 'menaik'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')
-            ->orderBy('terjual', 'asc')
-            ->get();
-        }elseif ($request->urutjual == 'menurun'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')
-            ->orderBy('terjual', 'desc')
-            ->get();
-        }elseif ($request->urutjual == 'nonaktif'){
-            $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-            ->join('barang', 'barang.id', '=', 'detail.id_barang')
-            ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')            
-            ->get();
-        }
-        return view('dashboard.menu.transaksi', [
-            'transaksi' => $detail,
-            'title_table' => 'Menu Transaksi',
-            'title_kolom' => 'Transaksi Barang'
-        ]);
-    }
-
-    public function search(Request $request){
-        $output = "";
-        
-        $transaksi = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
-        ->join('barang', 'barang.id', '=', 'detail.id_barang')
-        ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')
-        ->where('barang.nama_barang', 'Like', '%' . $request->search . '%' )        
-        ->get();            
-
-        foreach($transaksi as $transaksi){
-            $output.=                         
-
-            '<tr>
-                <td>' .$transaksi->id . '</td>
-                <td>' .$transaksi->nama_barang . '</td> 
-                <td>' .$transaksi->terjual . '</td> 
-                <td>' .$transaksi->tanggal_transaksi . '</td>                            
-            <tr>';
-
-        }
-        
-        return response($output);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -188,12 +83,12 @@ class TransaksiController extends Controller
      */
     public function edit(Transaksi $transaksi)
     {
-        $barang = Barang::join('detail', 'detail.id', '=', 'barang.id')->get();        
-        // $detail1 = Detail::firstWhere('id', $transaksi->id_detail);
-        // $detail = Barang::join('detail', 'detail.id', '=', 'barang.id')->where('id_barang', $detail1->id_barang)->get();
+        // $barang = Barang::join('detail', 'detail.id', '=', 'barang.id')->get();    
+        $detail1 = Detail::firstWhere('id', $transaksi->id_detail);
+        $detail = Barang::join('detail', 'detail.id', '=', 'barang.id')->where('id_barang', $detail1->id_barang)->get();
         
         return view('dashboard.menu.edit', [
-            'barang' => $barang,            
+            'detail' => $detail,
             'transaksi' =>$transaksi,
             'title' => 'Transaksi Barang',
         ]);

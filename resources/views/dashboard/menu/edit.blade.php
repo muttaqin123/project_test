@@ -28,20 +28,7 @@
                     {{ $message }}
                 </div>
             @enderror 
-        </div>
-        {{-- <div class="mb-3">
-            <label for="category" class="form-label">Category</label>
-            <select class="form-select" name="category_id">
-                @foreach ($categories as $category)
-                    @if(old('category_id', $post->category->id) == $category->id)
-                        <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
-                    @else
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endif
-                @endforeach
-              </select>
-        </div> --}}
-
+        </div>        
         <button type="submit" class="btn btn-primary">Ubah</button>
     </form>
 </div>
@@ -69,13 +56,9 @@
         @csrf
         <div class="mb-3">
             <label for="category" class="form-label">Nama Barang</label>
-            <select class="form-select" name="id_detail">
-                @foreach ($barang as $barang)
-                    @if(old('id_detail') == $barang->nama_barang)
-                        <option value="{{ $barang->id }}" selected>{{ $barang->nama_barang }}</option>
-                    @else
-                        <option value="{{ $barang->id }}">{{ $barang->nama_barang }}</option>
-                    @endif
+            <select class="form-select" name="id_detail" >
+                @foreach ($detail as $detail)
+                    <option value="{{ $detail->id }}">{{ $detail->nama_barang }}</option>                    
                 @endforeach
               </select>
         </div> 

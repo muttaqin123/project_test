@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tipe;
 use Illuminate\Http\Request;
+use Exception;
 
 class TipeController extends Controller
 {
@@ -21,24 +22,6 @@ class TipeController extends Controller
             'title_table' => 'Menu Tipe Barang',
             'title_kolom' => 'Tipe Barang'
         ]);
-    }
-
-    public function search(Request $request){
-        $output = "";
-        
-        $tipe = Tipe::where('nama_tipe', 'Like', '%' . $request->search . '%' )->get();      
-
-        foreach($tipe as $tipe){
-            $output.=                         
-
-            '<tr>
-                <td>' .$tipe->id . '</td>
-                <td>' .$tipe->nama_tipe . '</td>                            
-            <tr>';
-
-        }
-        
-        return response($output);
     }
 
     /**
@@ -123,8 +106,11 @@ class TipeController extends Controller
      */
     public function destroy(Tipe $tipe)
     {
-        Tipe::destroy($tipe->id);
-    
-        return redirect('/tipe')->with('success', 'Tipe barang berhasil dihapus');
+        try{            
+            Tipe::destroy($tipe->id);
+            return redirect('/tipe')->with('success', 'Tipe barang berhasil dihapus, tipe barang terdeteksi tidak memiliki data transaksi.');
+        }catch(Exception $error){
+            return redirect('/tipe')->with('failed', 'ID tipe barang yang akan dihapus, memiliki data dibagian transaksi. Harap untuk menghapus data dibagian transaksi terlebih dahulu!!!');
+        }
     }
 }

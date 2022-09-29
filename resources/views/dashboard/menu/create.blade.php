@@ -18,7 +18,7 @@
         @csrf
         <div class="mb-3">
           <label for="nama_barang" class="form-label">Nama Barang</label>
-          <input type="text" class="form-control @error('nama_barang') is-invalid @enderror" id="nama_barang" name="nama_barang" value="{{ old('nama_barang') }}" required autofocus>   
+          <input type="text" class="form-control @error('nama_barang') is-invalid @enderror" id="nama_barang" name="nama_barang" value="{{ old('nama_barang') }}" required autofocus>
             @error('nama_barang')  
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -27,15 +27,16 @@
         </div>
         <div class="mb-3">
             <label for="id_tipe" class="form-label">Tipe Barang</label>
-            <select class="form-select" name="id_tipe">
+            <select class="form-select" name="id_tipe" required>
+                <option value="" disabled selected hidden>Select your option</option>
                 @foreach ($tipe as $tipe)
-                    @if(old('id_tipe') == $tipe->id)
-                        <option value="{{ $tipe->id }}" selected>{{ $tipe->nama_tipe }}</option>
-                    @else
+                    {{-- @if(old('id_tipe') == $tipe->id) --}}
+                        
+                    {{-- @else --}}
                         <option value="{{ $tipe->id }}">{{ $tipe->nama_tipe }}</option>
-                    @endif
+                    {{-- @endif --}}
                 @endforeach
-              </select>
+            </select>
         </div>
         <div class="mb-3">
             <label for="stok" class="form-label">Stok Barang</label>

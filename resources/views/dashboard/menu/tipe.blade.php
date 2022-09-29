@@ -13,6 +13,12 @@
       </div>
     @endif
 
+    @if(session()->has('failed'))
+      <div class="alert alert-danger col-lg-12" role="alert"> 
+      {{ session('failed') }}
+      </div>
+    @endif
+
     <div class="table-responsive col-lg-10 mb-3">
       <a href="/tipe/create" class="btn btn-primary mb-2">Tambah Daftar Tipe Barang</a>
     </div>  
