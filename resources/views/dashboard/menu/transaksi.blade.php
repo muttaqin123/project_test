@@ -15,7 +15,21 @@
     <div class="table-responsive col-lg-12 mb-3">      
       <a href="/transaksi/create" class="btn btn-primary">Tambah Transaksi</a>      
     </div>
-    
+
+    {{-- <form action="/uruttanggal" method="post"> --}}
+      {{-- @csrf --}}
+      <div class="mt-1">
+        <p>Urut Jumlah Terjual Berdasarkan Tanggal =                      
+          <input type="date" name="awal" id="awal" value="2000-01-01"> -
+          <input type="date" name="akhir" id="akhir" value="2100-01-01">
+          <button type="submit" style="border: 1px solid; color: black; padding: 1px 20px;
+          text-align: center;text-decoration: none; display: inline-block;font-size: 16px;
+          margin: 4px 10px;cursor: pointer; background-color:rgb(224, 215, 215);" id="buttonn">
+          Terapkan</button>
+        </p>
+      </div>
+    {{-- </form> --}}
+
     <div class="containerr">
       <table id ="myTable" class="table table-stripped">
         <thead>
@@ -27,7 +41,7 @@
             <th scope="col">Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="alldata">
           @foreach ($transaksi as $transaksii)
           <tr>          
             <td>{{ $transaksii->id }}</td>
@@ -46,6 +60,9 @@
           </tr>
           @endforeach     
         </tbody>
+
+        <tbody id="Content" class="searchdata"></tbody>
+        
       </table>
     </div>
 
@@ -57,5 +74,31 @@
           $('#myTable').DataTable();
         } );
       </script>
+
+      <script type="text/javascript">
+        $('#buttonn').on('click', function(){
+          var awal = $("input[name='awal']").val();
+          var akhir = $("input[name='akhir']").val();
+              
+          if(awal || akhir){
+            $('.alldata').hide();
+            $('.searchdata').show();
+          }else{
+            $('.alldata').show();
+            $('.searchdata').hide();
+          }
+                
+          $.ajax({
+            type : 'get',
+            url : '{{URL::to('uruttanggal')}}',
+            data:{'awal':awal,'akhir':akhir},
+          
+            success:function(data){              
+              $('#Content').html(data);
+            }
+          });
+      })
+      </script>
+
 
 @endsection

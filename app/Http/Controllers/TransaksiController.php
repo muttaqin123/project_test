@@ -30,6 +30,40 @@ class TransaksiController extends Controller
         ]);
     }
 
+    public function uruttanggal(Request $request)
+    {
+        $output = "";
+        
+        $detail = Detail::join('transaksi', 'transaksi.id_detail', '=', 'detail.id')
+        ->join('barang', 'barang.id', '=', 'detail.id_barang')
+        ->select('transaksi.id','transaksi.id_detail','barang.nama_barang', 'terjual', 'tanggal_transaksi')
+        ->where('tanggal_transaksi', '>=', $request->awal)
+        ->Where('tanggal_transaksi', '<=', $request->akhir)
+        ->get();
+        
+        // return view('dashboard.menu.transaksi', [
+        //     'transaksi' => $detail,
+        //     'title_table' => 'Menu Transaksi',
+        //     'title_kolom' => 'Transaksi Barang'
+        // ]);
+                
+        foreach($detail as $detail){
+            $output.=             
+
+            '<tr>
+                <td>' .$detail->id . '</td>
+                <td>' .$detail->nama_barang . '</td> 
+                <td>' .$detail->terjual . '</td> 
+                <td>' .$detail->tanggal_transaksi . '</td>                            
+            <tr>
+            ';
+
+        }
+        
+        return response($output);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
