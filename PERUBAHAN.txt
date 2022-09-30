@@ -1,0 +1,11 @@
+PERUBAHAN SETELAH INTERVIEW
+1. Penambahan datatables pada tampilan barang, tipe dan transaksi
+2. Penambahan batasan/restrict pada foreign key pada child
+	2.1 Data pada tabel barang tidak bisa dihapus jika pada tabel transaksi terdapat transaksi yang menggunakan ID barang tersebut
+	2.2 Data pada tabel tipe tidak bisa dihapus jika pada tabel transaksi terdapat transaksi yang menggunakan ID tipe tersebut
+	2.3 Data pada barang dan tipe bisa dihapus jika tidak terdapat transaksi yang melibatkan ID barang dan ID tipe tersebut
+3. Menambahkan peringatan/alert jika berhasil menghapus/mengedit data
+4. Menambahkan peringatan/alert jika gagal menghapus data yang memiliki keterkaitan foreign key
+5. Menambahkan INTERFACE API transaksi dan barang
+6. Menambahkan fitur filter jumlah terjual berdasarkan jangka waktu antar 2 tanggal menggunakan AJAX
+7. Memperbaiki dan upload ulang file .sql, khususnya penambahan restrict pada foreign key
